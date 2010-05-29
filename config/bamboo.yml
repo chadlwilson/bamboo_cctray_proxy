@@ -1,0 +1,19 @@
+- codehaus_bamboo:
+    url: http://bamboo.ci.codehaus.org/
+    build_keys:
+        - XSTREAM-JDK16
+        - WAFFLE-CORE
+        - JETTY-TRUNK
+        - JBEHAVE-CORE16
+        - GROOVY-GROOVY16J16            
+- spring_bamboo:
+    url: http://build.springsource.org/
+    build_keys:
+        - SPR-TRUNKSNAPSHOT
+        - OSGI-TRUNK
+        - SEC-TRUNK
+        - SEC-TRUNK
+- dwr_bamboo:
+    url: http://ci.directwebremoting.org/bamboo/
+    build_keys:
+        - DWR-TRUNK

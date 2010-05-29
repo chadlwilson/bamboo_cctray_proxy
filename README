@@ -1,0 +1,58 @@
+TO_CCTRAY
+by Aman King 
+
+http://bitbucket.org/amanking/to_cctray/
+
+A Ruby application that can expose Atlassian Bamboo continuous integration build statuses in CruiseControl's CCTray XML format. When delivered over HTTP, this allows the many tools written to support monitoring of CruiseControl builds to be used with Atlassian Bamboo builds. Examples of such tools are CCMenu for MacOS and CCTray for Windows.
+
+The Bamboo servers and builds to monitor are specified in config/bamboo.yml. 
+Example configuration:
+- spring_bamboo:
+    url: http://build.springsource.org/
+    build_keys:
+        - SPR-TRUNKSNAPSHOT
+        - OSGI-TRUNK
+        - SEC-TRUNK
+        - SEC-TRUNK
+- dwr_bamboo:
+    url: http://ci.directwebremoting.org/bamboo/
+    build_keys:
+        - DWR-TRUNK
+
+A Ramaze application is included in this project as an example of delivering the CCTray XML over HTTP.
+To run it (from within the project folder):
+cd ramaze
+ruby -rrubygems start.rb
+
+The above may also be run under JRuby:
+jruby -rrubygems start.rb
+
+Once run, a tool like CCTray or CCMenu must be made to point to: http://localhost:7000/dashboard/cctray.xml
+Note: the default port can be overridden like this:
+ruby -rrubygems start.rb --port=7777
+
+Resources
+
+Atlassian Bamboo: http://www.atlassian.com/software/bamboo/
+CruiseControl: http://cruisecontrol.sourceforge.net/
+CCTray (Windows): http://confluence.public.thoughtworks.org/display/CCNET/CCTray
+JCCTray (Java): http://jcctray.sourceforge.net/
+CCMenu (Mac OS X): http://ccmenu.sourceforge.net/
+CCTray XML format: http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard
+Nokogiri XML parser: http://nokogiri.org/
+
+License
+
+   Copyright 2010 Aman King
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
