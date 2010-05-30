@@ -43,7 +43,7 @@ describe 'project build reader' do
     ]
   end
   
-  it 'should skip a project build if an error occurs reading one' do
+  it 'should skip a project build if a standard error occurs' do
     Net::HTTP.should_receive(:get).with(@rss_uri1).and_raise('http error')
     Net::HTTP.should_receive(:get).with(@rss_uri2).and_return(create_feed_xml(
       :last_build_label => 'FAKEPROJ-MYPROJ2-20',
@@ -56,6 +56,50 @@ describe 'project build reader' do
         :name => 'FAKEPROJ-MYPROJ2',
         :last_build_label => 'FAKEPROJ-MYPROJ2-20',
         :last_build_time => DateTime.parse('Sun, 16 Jan 2010 10:00:00 GMT'),
+        :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
+      )
+    ]
+  end
+
+  it 'should retry once if a timeout error occurs' do
+    Net::HTTP.should_receive(:get).with(@rss_uri1).ordered.and_raise(Timeout::Error.new('timeout error'))
+    Net::HTTP.should_receive(:get).with(@rss_uri1).ordered.and_return(create_feed_xml(
+      :last_build_label => 'FAKEPROJ-MYPROJ1-39',
+      :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ1-39'      
+    ))
+
+    Net::HTTP.should_receive(:get).with(@rss_uri2).and_return(create_feed_xml(
+      :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+      :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
+    ))
+
+    @project_build_reader.project_builds.should == [ 
+      create_project_build(
+        :name => 'FAKEPROJ-MYPROJ1',
+        :last_build_label => 'FAKEPROJ-MYPROJ1-39',
+        :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ1-39'      
+      ),
+      create_project_build(
+        :name => 'FAKEPROJ-MYPROJ2',
+        :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+        :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
+      )
+    ]
+  end
+
+  it 'should skip a project build if a timeout error occurs twice' do
+    Net::HTTP.should_receive(:get).with(@rss_uri1).ordered.and_raise(Timeout::Error.new('timeout error'))
+    Net::HTTP.should_receive(:get).with(@rss_uri1).ordered.and_raise(Timeout::Error.new('timeout error'))
+
+    Net::HTTP.should_receive(:get).with(@rss_uri2).and_return(create_feed_xml(
+      :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+      :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
+    ))
+
+    @project_build_reader.project_builds.should == [ 
+      create_project_build(
+        :name => 'FAKEPROJ-MYPROJ2',
+        :last_build_label => 'FAKEPROJ-MYPROJ2-20',
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
       )
     ]
