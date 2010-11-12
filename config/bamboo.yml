@@ -12,8 +12,7 @@
         - SPR-TRUNKSNAPSHOT
         - OSGI-TRUNK
         - SEC-TRUNK
-        - SEC-TRUNK
 - dwr_bamboo:
     url: http://ci.directwebremoting.org/bamboo/
     build_keys:
-        - DWR-TRUNK
+        - DWRTRUNK-ALL
