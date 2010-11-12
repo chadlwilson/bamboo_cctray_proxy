@@ -21,8 +21,10 @@ module AppOptions
   module_function :port, :adapter, :arg_value
 end
 
-Ramaze::Log.info "using adapter #{AppOptions.adapter} (to use another, pass --adapter=<adapter> argument)"
-Ramaze::Log.info "using port #{AppOptions.port} (to use another, pass --port=<port> argument)"
+if $0 == __FILE__
+  Ramaze::Log.info "using adapter #{AppOptions.adapter} (to use another, pass --adapter=<adapter> argument)"
+  Ramaze::Log.info "using port #{AppOptions.port} (to use another, pass --port=<port> argument)"
 
-Ramaze.start :adapter => AppOptions.adapter, :port => AppOptions.port, :mode => :live
+  Ramaze.start :adapter => AppOptions.adapter, :port => AppOptions.port, :mode => :live # run from here only if start.rb invoked directly
+end
 

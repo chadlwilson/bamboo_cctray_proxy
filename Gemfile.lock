@@ -1,0 +1,26 @@
+GEM
+  remote: http://rubygems.org/
+  specs:
+    attribute-driven (1.0.1)
+    daemons (1.0.10)
+    gem_plugin (0.2.3)
+    innate (2010.07)
+      rack (>= 1.1.0)
+    mongrel (1.2.0.pre2)
+      daemons (~> 1.0.10)
+      gem_plugin (~> 0.2.3)
+    nokogiri (1.4.3.1)
+    rack (1.2.1)
+    ramaze (2010.06.18)
+      innate (>= 2010.03)
+    retry-this (1.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  attribute-driven
+  mongrel (= 1.2.0.pre2)
+  nokogiri (>= 1.4.0)
+  ramaze
+  retry-this

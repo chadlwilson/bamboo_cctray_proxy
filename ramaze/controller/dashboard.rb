@@ -59,9 +59,9 @@ class Dashboard < Ramaze::Controller
     end
 
     def cache_file_path
-      config_file_dir = File.join(File.dirname(__FILE__), '../tmp/')
-      FileUtils.mkdir_p(config_file_dir)
-      File.join(config_file_dir, 'response.cache')
+      cache_file_dir = File.join(File.dirname(__FILE__), '../../tmp/')
+      FileUtils.mkdir_p(cache_file_dir)
+      File.join(cache_file_dir, 'response.cache')
     end
   end
 end
