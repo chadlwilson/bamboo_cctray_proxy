@@ -28,6 +28,8 @@ module CcTray
     def format_activity(activity)
       case activity
       when :checking_modifications then 'CheckingModifications'
+      when :sleeping then 'Sleeping'
+      when :building then 'Building'
       end
     end
     

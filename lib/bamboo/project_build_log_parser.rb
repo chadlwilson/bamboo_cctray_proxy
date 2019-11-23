@@ -32,7 +32,7 @@ module Bamboo
       end
 
       def name
-        last_build_label.match(/(.*?)-\d+$/)[1]
+        @item_node.parent.xpath('title').text.slice(/for the (.*) build/, 1)
       end
 
       def last_build_time
@@ -46,7 +46,7 @@ module Bamboo
       def to_hash
         {
           :name => name,
-          :activity => :checking_modifications,
+          :activity => :sleeping,
           :last_build_status => last_build_status,
           :last_build_label => last_build_label,
           :last_build_time => last_build_time,
