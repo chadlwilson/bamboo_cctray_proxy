@@ -3,7 +3,7 @@ require 'ramaze'
 require 'app/bamboo_to_cctray'
 
 class Dashboard < Ramaze::Controller
-  CACHE_EXPIRY_SECONDS = 300
+  CACHE_EXPIRY_SECONDS = 10
 
   map '/dashboard'
 
