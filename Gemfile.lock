@@ -12,7 +12,7 @@ GEM
       gem_plugin (~> 0.2.3)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
-    rack (1.2.1)
+    rack (1.6.11)
     ramaze (2010.06.18)
       innate (>= 2010.03)
     retry-this (1.0)
