@@ -1,10 +1,10 @@
 require 'rake'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
 desc 'Run specs'
-Spec::Rake::SpecTask.new(:rspec) do |t|
-  t.spec_opts = ['--options', 'spec/spec.opts']
-  t.spec_files = FileList['spec/**/*_spec.rb']
+RSpec::Core::RakeTask.new(:rspec) do |t|
+  t.rspec_opts = ["-c", "-f progress"]
+  t.pattern = 'spec/**/*_spec.rb'
 end
 
 task :default  => :rspec

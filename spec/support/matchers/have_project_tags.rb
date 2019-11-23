@@ -1,9 +1,9 @@
 require 'nokogiri'
 
-Spec::Matchers.define :have_project_tags do |*expected_project_tags|
+RSpec::Matchers.define :have_project_tags do |*expected_project_tags|
   match do |report_xml|
     doc = Nokogiri::XML::Document.parse(report_xml)
-    doc.xpath('Projects/Project').should have(expected_project_tags.size).results
+    doc.xpath('Projects/Project').size.should eq(expected_project_tags.size)
     
     result = true
     doc.xpath('Projects/Project').each_with_index do |actual_tag, index|
