@@ -28,7 +28,7 @@ module Bamboo
       build_keys.inject([]) do |result, build_key|
         result << project_build_log_url_for(server_url, build_key)
         result
-      end      
+      end
     end
     
     def project_build_log_url_for(server_url, build_key)
