@@ -1,7 +1,7 @@
 require 'ramaze'
 
-Ramaze.setup :verbose => true do
-  gem 'nokogiri', '>= 1.4.0'
+Ramaze.setup do
+  gem 'nokogiri', '>= 1.10.4'
   gem 'attribute-driven'
   gem 'retry-this'
 end
