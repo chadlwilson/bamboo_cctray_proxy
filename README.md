@@ -9,7 +9,7 @@ used with Atlassian Bamboo builds. Examples of such tools are CCMenu, CCTray and
 
 ## History
 
-This was [originally developed in 2010](http://bitbucket.org/amanking/to_cctray/) by @amanking. @chadlwilson ported this to 
+This was [originally developed in 2010](http://bitbucket.org/amanking/to_cctray/) by [@amanking](https://github.com/amanking). In 2019 [@chadlwilson](https://github.com/chadlwilson) ported this to 
 GitHub, Dockerized it and made it work on modern Ruby.
 
 ## Usage
