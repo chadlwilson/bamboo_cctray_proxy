@@ -3,6 +3,10 @@
     build_keys:
         - SCD-K8S19B15X
         - SCD-SCDFSAMPLES
+- spring_bamboo_project:
+    url: https://build.spring.io
+    projects:
+        - SCD
 - secured_bamboo:
     url: https://secret.bamboo.org
     basic_auth:
