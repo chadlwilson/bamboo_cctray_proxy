@@ -1,3 +1,9 @@
 tmp/
 spec/
 config/
+*.iml
+.*
+LICENSE
+README.md
+Dockerfile
+Rakefile
