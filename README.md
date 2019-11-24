@@ -1,6 +1,6 @@
 # Bamboo-to-CCTray Proxy
 
-[![Build pipeline status badge](https://github.com/chadlwilson/bamboo_cctray_proxy/workflows/Build/badge.svg)](https://github.com/chadlwilson/bamboo_cctray_proxy/actions)
+[![Build pipeline status badge](https://github.com/chadlwilson/bamboo_cctray_proxy/workflows/Ruby/badge.svg)](https://github.com/chadlwilson/bamboo_cctray_proxy/actions)
 
 Bamboo-to-CCTray is a small Ruby proxy application that can expose Atlassian Bamboo continuous integration build statuses 
 in CruiseControl's CCTray XML format.
