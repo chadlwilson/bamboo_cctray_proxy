@@ -57,10 +57,10 @@ Example configuration:
 
 # Resources
 
-Atlassian Bamboo: http://www.atlassian.com/software/bamboo/
-CruiseControl: http://cruisecontrol.sourceforge.net/
-CCTray (Windows): http://confluence.public.thoughtworks.org/display/CCNET/CCTray
-CCMenu (Mac OS X): http://ccmenu.sourceforge.net/
-BuildNotify (Linux): http://bitbucket.org/Anay/buildnotify/
-CCTray XML format: http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard
-Nokogiri XML parser: http://nokogiri.org/
+* Atlassian Bamboo: http://www.atlassian.com/software/bamboo/
+* CruiseControl: http://cruisecontrol.sourceforge.net/
+* CCTray (Windows): http://confluence.public.thoughtworks.org/display/CCNET/CCTray
+* CCMenu (Mac OS X): http://ccmenu.sourceforge.net/
+* BuildNotify (Linux): http://bitbucket.org/Anay/buildnotify/
+* CCTray XML format: http://confluence.public.thoughtworks.org/display/CI/Multiple+Project+Summary+Reporting+Standard
+* Nokogiri XML parser: http://nokogiri.org/
