@@ -24,7 +24,7 @@ describe 'Bamboo To CC Tray' do
     expect(report_xml).to have_project_tag_count(1)
     expect(report_xml).to have_project_tags(
       'lastBuildLabel' => '39',
-      'lastBuildTime' => '2010-01-17T17:39:35.0000000-00:00',
+      'lastBuildTime' => '2010-01-17T17:39:35Z',
       'name' => 'FAKEPROJ-MYPROJ',
       'webUrl' => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39',
       'activity' => 'Sleeping',
