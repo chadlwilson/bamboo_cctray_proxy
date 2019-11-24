@@ -4,8 +4,8 @@ require 'date'
 module ObjectFactory
   def create_project_build(params = {})
     default_params = {
-      :name => 'FAKEPROJ-MYPROJ', 
-      :activity => :checking_modifications, 
+      :name => 'FAKEPROJ-MYPROJ',
+      :activity => :sleeping,
       :last_build_status => :success,
       :last_build_label => 'FAKEPROJ-MYPROJ-39',
       :last_build_time => DateTime.parse('2010-01-17T17:39:35Z'),
@@ -17,21 +17,21 @@ module ObjectFactory
   end
   
   def create_feed_xml(*params)
-    result = <<-RSS
+    result = %Q(
     <?xml version="1.0" encoding="UTF-8"?>
     <rss xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:taxo="http://purl.org/rss/1.0/modules/taxonomy/" version="2.0">
     <channel>
-      <title>Bamboo build results feed for the Snapshot - Maven - FAKEPROJ-v3.x build</title>
+      <title>Bamboo build results feed for the #{params[0][:name]} build</title>
       <link>http://fakeproj.org/bamboo</link>
-      <description>This feed is updated whenever the Snapshot - Maven - FAKEPROJ-v3.x build gets built</description>
-    RSS
+      <description>This feed is updated whenever the #{params[0][:name]} build gets built</description>
+    )
     params.each do |item_params|
       result += create_feed_item_xml(item_params)
     end
-    result << <<-RSS
+    result << %Q(
     </channel>
     </rss>    
-    RSS
+    )
   end
   
   def create_feed_item_xml(params = {})
