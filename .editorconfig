@@ -1,0 +1,17 @@
+root = true
+
+[*]
+# charset = utf-8
+# end_of_line = lf
+# indent_size = 4
+# indent_style = space
+# insert_final_newline = false
+# max_line_length = 120
+# tab_width = 4
+
+[{*.yml,*.yaml}]
+# indent_size = 2
+
+[{rake,spec,Gemfile,rails,Appfile,fastfile,Fastfile,Cartfile,Pluginfile,spork,rcov,Matchfile,cucumber,capfile,gemfile,rakefile,guardfile,isolate,vagrantfile,*.thor,*.rb,*.rake,*.rbw,*.ru,*.jbuilder,*.gemspec}]
+# indent_size = 2
+# tab_width = 2
