@@ -16,7 +16,6 @@ GitHub, Dockerized it and made it work on modern Ruby.
 
 ## Usage
 
-1. `git clone git@github.com:chadlwilson/bamboo_cctray_proxy.git`
 1. Setup your configuration in `config/bamboo.xml`
 1. Run it by one of the mechanisms below
 1. Navigate to http://localhost:7000/dashboard/cctray.xml to view the feed; point your tools at this
@@ -24,13 +23,14 @@ GitHub, Dockerized it and made it work on modern Ruby.
 ### Docker
 
 ```
-docker build . -t bamboo_cctray_proxy
-docker run -p 7000:7000 -v $(pwd)/config:/app/config proxy
+mkdir -p config && touch config/bamboo.xml
+docker run -p 7000:7000 -v $(pwd)/config:/app/config chadwilson/bamboo_cctray_proxy:latest
 ```
 
-### Using Ruby directly
+### Running from source
 
 ```
+git clone git@github.com:chadlwilson/bamboo_cctray_proxy.git && cd bamboo_cctray_proxy
 bundle install --without=test
 cd ramaze && ruby -rrubygems start.rb
 ```
