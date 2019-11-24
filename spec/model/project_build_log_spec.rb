@@ -9,7 +9,7 @@ describe 'project build log' do
       :name => 'FAKEPROJ-MYPROJ',
       :activity => :sleeping,
       :last_build_status => :success,
-      :last_build_label => 'FAKEPROJ-MYPROJ-39',
+      :last_build_label => '39',
       :last_build_time => DateTime.parse('2010-01-17T17:39:35Z'),
       :next_build_time => nil,
       :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
@@ -19,7 +19,7 @@ describe 'project build log' do
       :name => 'FAKEPROJ-MYPROJ',
       :activity => :sleeping,
       :last_build_status => :success,
-      :last_build_label => 'FAKEPROJ-MYPROJ-40',
+      :last_build_label => '40',
       :last_build_time => DateTime.parse('2010-01-17T18:39:35Z'),
       :next_build_time => nil,
       :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-40'

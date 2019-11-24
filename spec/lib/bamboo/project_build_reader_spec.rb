@@ -21,14 +21,14 @@ describe 'project build reader' do
    expect(Net::HTTP).to receive(:get).with(@rss_uri1).and_return(
         create_feed_xml(
             :name => 'FAKEPROJ-MYPROJ1',
-            :last_build_label => 'FAKEPROJ-MYPROJ1-39',
+            :last_build_label => '39',
             :last_build_time => 'Sun, 17 Jan 2010 17:39:35 GMT',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ1-39'
         ))
    expect(Net::HTTP).to receive(:get).with(@rss_uri2).and_return(
         create_feed_xml(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :last_build_time => 'Sun, 16 Jan 2010 10:00:00 GMT',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         ))
@@ -36,13 +36,13 @@ describe 'project build reader' do
     expect(@project_build_reader.project_builds).to eq [
         create_project_build(
             :name => 'FAKEPROJ-MYPROJ1',
-            :last_build_label => 'FAKEPROJ-MYPROJ1-39',
+            :last_build_label => '39',
             :last_build_time => DateTime.parse('Sun, 17 Jan 2010 17:39:35 GMT'),
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ1-39'
         ),
         create_project_build(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :last_build_time => DateTime.parse('Sun, 16 Jan 2010 10:00:00 GMT'),
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         )
@@ -54,7 +54,7 @@ describe 'project build reader' do
    expect(Net::HTTP).to receive(:get).with(@rss_uri2).and_return(
         create_feed_xml(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :last_build_time => 'Sun, 16 Jan 2010 10:00:00 GMT',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         ))
@@ -62,7 +62,7 @@ describe 'project build reader' do
     expect(@project_build_reader.project_builds).to eq [
         create_project_build(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :last_build_time => DateTime.parse('Sun, 16 Jan 2010 10:00:00 GMT'),
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         )
@@ -74,26 +74,26 @@ describe 'project build reader' do
    expect(Net::HTTP).to receive(:get).with(@rss_uri1).ordered.and_return(
         create_feed_xml(
             :name => 'FAKEPROJ-MYPROJ1',
-            :last_build_label => 'FAKEPROJ-MYPROJ1-39',
+            :last_build_label => '39',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ1-39'
         ))
 
    expect(Net::HTTP).to receive(:get).with(@rss_uri2).and_return(
         create_feed_xml(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         ))
 
     expect(@project_build_reader.project_builds).to eq [
         create_project_build(
             :name => 'FAKEPROJ-MYPROJ1',
-            :last_build_label => 'FAKEPROJ-MYPROJ1-39',
+            :last_build_label => '39',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ1-39'
         ),
         create_project_build(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         )
     ]
@@ -106,14 +106,14 @@ describe 'project build reader' do
    expect(Net::HTTP).to receive(:get).with(@rss_uri2).and_return(
         create_feed_xml(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         ))
 
     expect(@project_build_reader.project_builds).to eq [
         create_project_build(
             :name => 'FAKEPROJ-MYPROJ2',
-            :last_build_label => 'FAKEPROJ-MYPROJ2-20',
+            :last_build_label => '20',
             :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ2-20'
         )
     ]

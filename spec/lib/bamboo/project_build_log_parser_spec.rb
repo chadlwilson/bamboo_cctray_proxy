@@ -10,7 +10,7 @@ module Bamboo
       feed_xml = create_feed_xml(
         :name => 'FAKEPROJ-MYPROJ',
         :last_build_status => :success,
-        :last_build_label => 'FAKEPROJ-MYPROJ-39',
+        :last_build_label => '39',
         :last_build_time => 'Sun, 17 Jan 2010 17:39:35 GMT',
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
       )
@@ -19,7 +19,7 @@ module Bamboo
         :name => 'FAKEPROJ-MYPROJ',
         :activity => :sleeping,
         :last_build_status => :success,
-        :last_build_label => 'FAKEPROJ-MYPROJ-39',
+        :last_build_label => '39',
         :last_build_time => DateTime.parse('Sun, 17 Jan 2010 17:39:35 GMT'),
         :next_build_time => nil,
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
@@ -31,7 +31,7 @@ module Bamboo
       feed_xml = create_feed_xml(
         :name => 'FAKEPROJ-MYPROJ',
         :last_build_status => :failure,
-        :last_build_label => 'FAKEPROJ-MYPROJ-39',
+        :last_build_label => '39',
         :last_build_time => 'Sun, 17 Jan 2010 17:39:35 GMT',
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
       )
@@ -40,7 +40,7 @@ module Bamboo
         :name => 'FAKEPROJ-MYPROJ', 
         :activity => :sleeping,
         :last_build_status => :failure,
-        :last_build_label => 'FAKEPROJ-MYPROJ-39',
+        :last_build_label => '39',
         :last_build_time => DateTime.parse('Sun, 17 Jan 2010 17:39:35 GMT'),
         :next_build_time => nil,
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
@@ -53,14 +53,14 @@ module Bamboo
         {
           :name => 'FAKEPROJ-MYPROJ',
           :last_build_status => :success,
-          :last_build_label => 'FAKEPROJ-MYPROJ-39',
+          :last_build_label => '39',
           :last_build_time => 'Sun, 17 Jan 2010 17:39:35 GMT',
           :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
         },
         {
           :name => 'FAKEPROJ-MYPROJ',
           :last_build_status => :failure,
-          :last_build_label => 'FAKEPROJ-MYPROJ-38',
+          :last_build_label => '38',
           :last_build_time => 'Sun, 16 Jan 2010 10:00:00 GMT',
           :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-38'
         }
@@ -71,7 +71,7 @@ module Bamboo
           :name => 'FAKEPROJ-MYPROJ',
           :activity => :sleeping,
           :last_build_status => :success,
-          :last_build_label => 'FAKEPROJ-MYPROJ-39',
+          :last_build_label => '39',
           :last_build_time => DateTime.parse('Sun, 17 Jan 2010 17:39:35 GMT'),
           :next_build_time => nil,
           :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
@@ -80,7 +80,7 @@ module Bamboo
           :name => 'FAKEPROJ-MYPROJ',
           :activity => :sleeping,
           :last_build_status => :failure,
-          :last_build_label => 'FAKEPROJ-MYPROJ-38',
+          :last_build_label => '38',
           :last_build_time => DateTime.parse('Sun, 16 Jan 2010 10:00:00 GMT'),
           :next_build_time => nil,
           :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-38'

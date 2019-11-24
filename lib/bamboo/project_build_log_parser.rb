@@ -28,7 +28,7 @@ module Bamboo
       end
 
       def last_build_label
-        web_url.match(/\/browse\/(.*?)\/?$/)[1]
+        web_url.match(/\/browse\/(.*?)-([0-9]+)\/?$/)[2]
       end
 
       def name

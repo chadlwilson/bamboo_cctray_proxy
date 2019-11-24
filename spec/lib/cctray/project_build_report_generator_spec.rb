@@ -10,7 +10,7 @@ module CcTray
         :name => 'FAKEPROJ-MYPROJ',
         :activity => :sleeping,
         :last_build_status => :success,
-        :last_build_label => 'FAKEPROJ-MYPROJ-39',
+        :last_build_label => '39',
         :last_build_time => DateTime.parse('2010-01-17T17:39:35Z'),
         :next_build_time => nil,
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
@@ -19,7 +19,7 @@ module CcTray
       report_xml = ProjectBuildReportGenerator.new.generate(project_build)
       expect(report_xml).to have_project_tag_count(1)
       expect(report_xml).to have_project_tags(
-        'lastBuildLabel' => 'FAKEPROJ-MYPROJ-39',
+        'lastBuildLabel' => '39',
         'lastBuildTime' => '2010-01-17T17:39:35.0000000-00:00',
         'name' => 'FAKEPROJ-MYPROJ',
         'webUrl' => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39',

@@ -7,7 +7,7 @@ module ObjectFactory
       :name => 'FAKEPROJ-MYPROJ',
       :activity => :sleeping,
       :last_build_status => :success,
-      :last_build_label => 'FAKEPROJ-MYPROJ-39',
+      :last_build_label => '39',
       :last_build_time => DateTime.parse('2010-01-17T17:39:35Z'),
       :next_build_time => nil,
       :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
@@ -37,7 +37,7 @@ module ObjectFactory
   def create_feed_item_xml(params = {})
     default_params = {
       :last_build_status => :success,
-      :last_build_label => 'FAKEPROJ-MYPROJ-39',
+      :last_build_label => '39',
       :last_build_time => 'Sun, 17 Jan 2010 17:39:35 GMT',
       :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
     }
