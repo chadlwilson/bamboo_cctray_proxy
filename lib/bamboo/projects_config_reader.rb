@@ -1,4 +1,5 @@
 require 'yaml'
+require 'bamboo-client'
 
 module Bamboo
   class ProjectsConfigReader
@@ -8,7 +9,7 @@ module Bamboo
 
     def project_build_log_cxns
       config.inject([]) do |result, server_config|
-        result << project_build_log_cxns_for(server_config.connection, server_config.build_keys)
+        result << project_build_log_cxns_for(server_config)
         result
       end.flatten
     end
@@ -27,15 +28,35 @@ module Bamboo
                 url: server_detail.values.first['url'],
                 basic_auth: server_detail.values.first['basic_auth']
             },
+            server_detail.values.first['projects'],
             server_detail.values.first['build_keys'])
       end
     end
 
-    def project_build_log_cxns_for(server_connection, build_keys)
-      build_keys.inject([]) do |result, build_key|
-        result << project_build_log_cxn_for(server_connection, build_key)
-        result
+    def project_build_log_cxns_for(server_config)
+      build_keys = server_config.build_keys
+      if build_keys.nil?
+        build_keys = build_keys_for(server_config)
       end
+      build_keys.map { |build_key| project_build_log_cxn_for(server_config.connection, build_key) }
+    end
+
+    private
+    def build_keys_for(server_config)
+      connection = server_config.connection
+      project_keys = server_config.projects
+
+      client = Bamboo::Client.for(:rest, connection[:url])
+      if connection[:basic_auth]
+        client.login(connection[:basic_auth]['username'], connection[:basic_auth]['password'])
+      end
+      projects = project_keys.nil? ? client.projects : project_keys.map { |projectKey| client.project_for(projectKey) }
+
+      projects.collect { |project|
+        project.plans
+            .select { |plan| plan.enabled? }
+            .map { |plan| plan.key }
+      }.flatten
     end
 
     def project_build_log_cxn_for(server_connection, build_key)
@@ -49,6 +70,6 @@ module Bamboo
       url =~ /\/$/ ? '' : '/'
     end
 
-    ServerConfig = Struct.new(:name, :connection, :build_keys)
+    ServerConfig = Struct.new(:name, :connection, :projects, :build_keys)
   end
 end

@@ -8,3 +8,5 @@ gem 'retry-this'
 group :test do
   gem 'rspec'
 end
+
+gem "bamboo-client", "~> 0.1.9"
