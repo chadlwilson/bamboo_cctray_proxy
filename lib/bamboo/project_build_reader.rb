@@ -23,36 +23,36 @@ module Bamboo
 
     def latest_project_build_from(project_build_log_cxn)
       retry_this(:times => 1, :error_types => Timeout::Error) do
-        project_build_log_from(project_build_log_cxn).latest
+        project_build_log_from(project_build_log_cxn)
       end
-    rescue StandardError, Timeout::Error
-      nil
+    rescue StandardError, Timeout::Error => e
+      puts e.message
+      puts e.backtrace
     end
 
     def project_build_log_from(project_build_log_cxn)
-      xml = xml_at(project_build_log_cxn)
-      @project_build_log_parser.parse(xml)
-    end
-
-    def xml_at(project_build_log_cxn)
-      uri = URI.parse(project_build_log_cxn[:url])
-      if project_build_log_cxn[:basic_auth]
-        req = Net::HTTP::Get.new(uri)
-        req.basic_auth(
-            project_build_log_cxn[:basic_auth]["username"],
-            project_build_log_cxn[:basic_auth]["password"])
-        res = Net::HTTP.start(uri.hostname,
-                              uri.port,
-                              :use_ssl => project_build_log_cxn[:url].start_with?("https")
-        ) { |http|
-          http.request(req)
-        }
-        res.body
-      else
-        Net::HTTP.get(uri)
-      end
+      latestResult = project_build_log_cxn[:client].latest_result_for(project_build_log_cxn[:build_key])
+      @project_build_log_parser.parse(latestResult)
     end
 
     include RetryThis
   end
 end
+
+# Apply some monekey-patches to the Bamboo Client Rest API to allow us to efficiently invoke it
+module BambooClientRestExtensions
+  module LatestResultFor
+    def latest_result_for(key)
+      Bamboo::Client::Rest::Result.new get("result/#{URI.escape key}-latest").data, @http
+    end
+  end
+
+  module ResultPlanName
+    def plan_name
+      @data.fetch('planName')
+    end
+  end
+end
+
+Bamboo::Client::Rest.include BambooClientRestExtensions::LatestResultFor
+Bamboo::Client::Rest::Result.include BambooClientRestExtensions::ResultPlanName

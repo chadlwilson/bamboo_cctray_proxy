@@ -34,22 +34,25 @@ module Bamboo
     end
 
     def project_build_log_cxns_for(server_config)
+      client = client_for(server_config)
       build_keys = server_config.build_keys
       if build_keys.nil?
-        build_keys = build_keys_for(server_config)
+        build_keys = build_keys_for(client, server_config.projects)
       end
-      build_keys.map { |build_key| project_build_log_cxn_for(server_config.connection, build_key) }
+      build_keys.map { |build_key| { client: client, build_key: build_key }}
+    end
+
+    def client_for(server_config)
+      client = Bamboo::Client.for(:rest, server_config[:connection][:url])
+      if server_config[:connection][:basic_auth]
+        client.login(server_config[:connection][:basic_auth]['username'],
+                     server_config[:connection][:basic_auth]['password'])
+      end
+      client
     end
 
     private
-    def build_keys_for(server_config)
-      connection = server_config.connection
-      project_keys = server_config.projects
-
-      client = Bamboo::Client.for(:rest, connection[:url])
-      if connection[:basic_auth]
-        client.login(connection[:basic_auth]['username'], connection[:basic_auth]['password'])
-      end
+    def build_keys_for(client, project_keys)
       projects = project_keys.nil? ? client.projects : project_keys.map { |projectKey| client.project_for(projectKey) }
 
       projects.collect { |project|
@@ -57,17 +60,6 @@ module Bamboo
             .select { |plan| plan.enabled? }
             .map { |plan| plan.key }
       }.flatten
-    end
-
-    def project_build_log_cxn_for(server_connection, build_key)
-      {
-          url: server_connection[:url] + slash_after(server_connection[:url]) + 'rss/createAllBuildsRssFeed.action?feedType=rssAll&buildKey=' + build_key,
-          basic_auth: server_connection[:basic_auth]
-      }
-    end
-
-    def slash_after(url)
-      url =~ /\/$/ ? '' : '/'
     end
 
     ServerConfig = Struct.new(:name, :connection, :projects, :build_keys)

@@ -1,57 +1,69 @@
-require 'nokogiri'
 require 'model/project_build_log'
 require 'model/project_build'
 
 module Bamboo
   class ProjectBuildLogParser
-    def parse(rss_feed)
-      doc = Nokogiri::XML::Document.parse(rss_feed)
-      doc.xpath('rss/channel/item').inject(ProjectBuildLog.new) do |project_build_log, item_node|
-        project_build_log << project_build_from(item_node)
-        project_build_log
-      end
+
+    def parse(result)
+      ProjectBuild.new(ProjectBuildResult.new(result).to_hash)
     end
-    
+
     private
-    def project_build_from(item_node)
-      project_build_params = ProjectBuildItemNode.new(item_node).to_hash
-      ProjectBuild.new(project_build_params)      
-    end
-    
-    class ProjectBuildItemNode
-      def initialize(item_node)
-        @item_node = item_node
+
+    class ProjectBuildResult
+      def initialize(result)
+        @result = result
       end
 
       def web_url
-        @item_node.xpath('link').text
+        @result.url
       end
 
       def last_build_label
-        web_url.match(/\/browse\/(.*?)-([0-9]+)\/?$/)[2]
+        @result.number
       end
 
       def name
-        @item_node.parent.xpath('title').text.slice(/for the (.*) build/, 1)
+        @result.plan_name
+      end
+
+      def activity
+        case @result.life_cycle_state
+        when :finished then
+          :sleeping
+        when :not_built then
+          :sleeping
+        else
+          :building
+        end
       end
 
       def last_build_time
-        DateTime.parse(@item_node.xpath('pubDate').text)
+        @result.completed_time || @result.started_time
       end
 
       def last_build_status
-        @item_node.xpath('title').text =~ /#{last_build_label} was SUCCESSFUL/ ? :success : :failure
+        case @result.state
+        when :successful then
+          :success
+        when :failed then
+          :failure
+        when :unknown then
+          :building
+        else
+          :unknown
+        end
       end
 
       def to_hash
         {
-          :name => name,
-          :activity => :sleeping,
-          :last_build_status => last_build_status,
-          :last_build_label => last_build_label,
-          :last_build_time => last_build_time,
-          :next_build_time => nil,
-          :web_url => web_url
+            :name => name,
+            :activity => activity,
+            :last_build_status => last_build_status,
+            :last_build_label => last_build_label,
+            :last_build_time => last_build_time,
+            :next_build_time => nil,
+            :web_url => web_url
         }
       end
     end

@@ -19,11 +19,9 @@ module Bamboo
         ])
       end
 
-      it 'should return Bamboo RSS urls for multiple projects' do
-        expect(@projects_config_reader.project_build_log_cxns).to eq [
-          { url: 'http://somedomain.com/bamboo/rss/createAllBuildsRssFeed.action?feedType=rssAll&buildKey=FAKEPROJ-MYPROJ1', basic_auth: nil },
-          { url: 'http://somedomain.com/bamboo/rss/createAllBuildsRssFeed.action?feedType=rssAll&buildKey=FAKEPROJ-MYPROJ2', basic_auth: nil }
-        ]
+      it 'should return Bamboo build keys for multiple projects' do
+        expect(@projects_config_reader.project_build_log_cxns.map { |cxn| cxn[:build_key] })
+            .to eq ['FAKEPROJ-MYPROJ1', 'FAKEPROJ-MYPROJ2']
       end
     end
 
@@ -40,11 +38,11 @@ module Bamboo
       end
 
       it 'should return Bamboo RSS urls for multiple projects' do
-        expect(@projects_config_reader.project_build_log_cxns).to eq [
-          { url: 'http://xyz.com/builds/rss/createAllBuildsRssFeed.action?feedType=rssAll&buildKey=FAKEPROJ-MYPROJ1', basic_auth: nil },
-          { url: 'http://abc.com/bamboo/rss/createAllBuildsRssFeed.action?feedType=rssAll&buildKey=FAKEPROJ-MYPROJ1', basic_auth: nil },
-          { url: 'http://abc.com/bamboo/rss/createAllBuildsRssFeed.action?feedType=rssAll&buildKey=FAKEPROJ-MYPROJ2', basic_auth: nil }
-        ]
+        cxns = @projects_config_reader.project_build_log_cxns
+        expect(cxns.map { |cxn| cxn[:build_key] })
+            .to eq ['FAKEPROJ-MYPROJ1', 'FAKEPROJ-MYPROJ1', 'FAKEPROJ-MYPROJ2']
+
+        expect(cxns[0][:client]).to_not eq cxns[1][:client]
       end
     end
   end
