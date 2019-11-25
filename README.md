@@ -9,10 +9,8 @@ When delivered over HTTP, this allows the many tools written to support monitori
 used with Atlassian Bamboo builds. Examples of such tools are CCMenu, CCTray and Build Radiator/Monitor tools such as 
 [NeverGreen](https://github.com/build-canaries/nevergreen)
 
-## History
-
-This was [originally developed in 2010](http://bitbucket.org/amanking/to_cctray/) by [@amanking](https://github.com/amanking). In 2019 [@chadlwilson](https://github.com/chadlwilson) ported this to 
-GitHub, Dockerized it and made it work on modern Ruby.
+This was [originally developed in 2010](http://bitbucket.org/amanking/to_cctray/) by [@amanking](https://github.com/amanking), 
+and later ported to GitHub, moved to modern Ruby, Bamboo REST API (rather than RSS feeds) and dockerized.
 
 ## Usage
 
