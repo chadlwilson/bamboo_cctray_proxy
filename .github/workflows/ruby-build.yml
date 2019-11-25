@@ -1,37 +1,57 @@
 name: Build
 
 on:
-  pull_request:
-    branches: master
   push:
     branches: master
-    tags:
+  pull_request:
+    branches: master
+
+env:
+  IMAGE_REPO: chadwilson
+  IMAGE_NAME: bamboo_cctray_proxy
 
 jobs:
-  build:
-
+  test:
     runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v1
+    
     - name: Set up Ruby 2.6
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
+    
     - name: Build and test with Rake
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
+        
+  push:
+    needs: test
+    runs-on: ubuntu-latest
+    
+    steps:
     - name: Set up Docker Buildx
       id: buildx
       uses: crazy-max/ghaction-docker-buildx@v1
       with:
         version: latest
+    
     - name: Available platforms
       run: echo ${{ steps.buildx.outputs.platforms }}
-    - name: Build docker images
+    
+    - name: Log into registry
+      run: echo "${{ secrets.DOCKERHUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+    
+    - name: Build & push docker images
       run: |
         docker buildx build \
           --platform linux/amd64,linux/arm64 \
           --output "type=image,push=false" \
+          --tag $IMAGE_REPO/$IMAGE_TAG:latest
+          --push 
           .
+          
+   
+
