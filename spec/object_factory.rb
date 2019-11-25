@@ -8,7 +8,7 @@ module ObjectFactory
         :activity => :sleeping,
         :last_build_status => :success,
         :last_build_label => '39',
-        :last_build_time => DateTime.parse('2010-01-17T17:39:35Z'),
+        :last_build_time => Time.parse('2010-01-17T17:39:35Z'),
         :next_build_time => nil,
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
     }
@@ -20,7 +20,7 @@ module ObjectFactory
     default_params = {
         :last_build_status => :success,
         :last_build_label => '39',
-        :last_build_time => 'Sun, 17 Jan 2010 17:39:35 GMT',
+        :last_build_time => DateTime.parse('Sun, 17 Jan 2010 17:39:35 GMT'),
         :web_url => 'http://fakeproj.org/bamboo/browse/FAKEPROJ-MYPROJ-39'
     }
     values = default_params.merge(params)
@@ -54,8 +54,8 @@ module ObjectFactory
   "id": 287493128,
   "buildStartedTime": "2019-07-02T06:10:00.189Z",
   "prettyBuildStartedTime": "Tue, 2 Jul, 06:10 AM",
-  "buildCompletedTime": "#{DateTime.parse(values[:last_build_time]).strftime('%Y-%m-%dT%H:%M:%SZ')}",
-  "buildCompletedDate": "#{DateTime.parse(values[:last_build_time]).strftime('%Y-%m-%dT%H:%M:%SZ')}",
+  "buildCompletedTime": "#{values[:last_build_time].strftime('%Y-%m-%dT%H:%M:%SZ')}",
+  "buildCompletedDate": "#{values[:last_build_time].strftime('%Y-%m-%dT%H:%M:%SZ')}",
   "prettyBuildCompletedTime": "#{values[:last_build_time]}",
   "buildDurationInSeconds": 686,
   "buildDuration": 686891,

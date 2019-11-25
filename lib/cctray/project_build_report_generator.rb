@@ -22,7 +22,7 @@ module CcTray
     
     private
     def format_last_build_time(last_build_time)
-      last_build_time.strftime('%Y-%m-%dT%H:%M:%SZ')
+      last_build_time.utc.strftime('%Y-%m-%dT%H:%M:%SZ')
     end
     
     def format_activity(activity)
