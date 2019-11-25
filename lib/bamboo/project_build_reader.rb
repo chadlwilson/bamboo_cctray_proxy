@@ -3,6 +3,8 @@ require 'retry_this'
 require 'lib/bamboo/projects_config_reader'
 require 'lib/bamboo/project_build_log_parser'
 
+RestClient.log = STDOUT
+
 module Bamboo
   class ProjectBuildReader
     def initialize(config_file_path)
@@ -43,16 +45,22 @@ end
 module BambooClientRestExtensions
   module LatestResultFor
     def latest_result_for(key)
-      Bamboo::Client::Rest::Result.new get("result/#{URI.escape key}-latest").data, @http
+      result = Bamboo::Client::Rest::Result.new get("result/#{URI.escape key}-latest").data, @http
+      result.details_from_data
+      result
     end
   end
 
   module ResultPlanName
+    def details_from_data
+      @details = @data
+    end
+
     def plan_name
       @data.fetch('planName')
     end
   end
 end
 
-Bamboo::Client::Rest.include BambooClientRestExtensions::LatestResultFor
 Bamboo::Client::Rest::Result.include BambooClientRestExtensions::ResultPlanName
+Bamboo::Client::Rest.include BambooClientRestExtensions::LatestResultFor
