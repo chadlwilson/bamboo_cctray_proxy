@@ -54,7 +54,7 @@ docker-compose up
 ### Docker
 
 ```bash
-mkdir -p config && touch config/bamboo.xml # Put your config here
+mkdir -p config && touch config/bamboo.yml # Put your config here
 docker run -p 7000:7000 -v $(pwd)/config:/app/config chadwilson/bamboo_cctray_proxy:latest
 ```
 
