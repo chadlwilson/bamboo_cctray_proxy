@@ -18,8 +18,26 @@ to support monitoring entire Bamboo projects.
 
 Bamboo builds on [NeverGreen](https://github.com/build-canaries/nevergreen) (with healthy builds showing; for clarity)
 ![Example Monitor page](examples/screenshot_nevergreen_dashboard.png)
+
 Auto-detection of Bamboo builds:
 ![Example Tracking page](examples/screenshot_nevergreen_tracking.png)
+
+Example [CCTray formatted output](https://cctray.org/) snippet driving the above
+```xml
+<Projects>
+    <Project lastBuildLabel="69" lastBuildTime="2019-07-02T06:24:03Z" name="Server - Kubernetes 1.11 - 1.7.x"
+             webUrl="https://build.spring.io/rest/api/latest/result/SCD-K8S19B15X-69" activity="Sleeping"
+             lastBuildStatus="Success"/>
+    <Project lastBuildLabel="101" lastBuildTime="2019-11-13T19:23:08Z" name="Spring Cloud Data Flow Samples"
+             webUrl="https://build.spring.io/rest/api/latest/result/SCD-SCDFSAMPLES-101" activity="Sleeping"
+             lastBuildStatus="Failure"/>
+    <Project lastBuildLabel="175" lastBuildTime="2019-11-26T14:52:21Z" name="projectreactor.io"
+             webUrl="https://build.spring.io/rest/api/latest/result/REACTOR-RSITE-175" activity="Sleeping"
+             lastBuildStatus="Success"/>
+    <!-- SNIPPED -->
+</Projects>
+```
+
 
 You can see this example yourself in [./examples](./examples/docker-compose.yml) and run with
 ```bash
