@@ -1,0 +1,9 @@
+- spring_cloud_data_builds:
+    url: https://build.spring.io
+    build_keys:
+        - SCD-K8S19B15X
+        - SCD-SCDFSAMPLES
+- spring_reactor_project:
+    url: https://build.spring.io
+    projects:
+        - REACTOR
