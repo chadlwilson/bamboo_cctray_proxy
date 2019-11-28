@@ -1,5 +1,6 @@
 require 'net/http'
 require 'retry_this'
+require 'concurrent'
 require 'lib/bamboo/projects_config_reader'
 require 'lib/bamboo/project_build_log_parser'
 
@@ -10,12 +11,16 @@ module Bamboo
     def initialize(config_file_path)
       @projects_config_reader = Bamboo::ProjectsConfigReader.new(config_file_path)
       @project_build_log_parser = Bamboo::ProjectBuildLogParser.new
+      @request_executor = Concurrent::FixedThreadPool.new(10)
     end
 
     def project_builds
-      project_build_log_cxns.collect do |project_build_log_cxn|
-        latest_project_build_from(project_build_log_cxn)
+      futures = project_build_log_cxns.collect do |project_build_log_cxn|
+        Concurrent::Promises.future(project_build_log_cxn) do |cxn|
+          latest_project_build_from(cxn)
+        end
       end.compact
+      Concurrent::Promises.zip_futures_on(@request_executor, *futures).value!
     end
 
     private
@@ -45,7 +50,7 @@ end
 module BambooClientRestExtensions
   module LatestResultFor
     def latest_result_for(key)
-      result = Bamboo::Client::Rest::Result.new get("result/#{URI.escape key}-latest").data, @http
+      result = Bamboo::Client::Rest::Result.new get("result/#{URI.escape key}/latest").data, @http
       result.details_from_data
       result
     end
