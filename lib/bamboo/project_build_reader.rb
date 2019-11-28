@@ -11,7 +11,7 @@ module Bamboo
     def initialize(config_file_path)
       @projects_config_reader = Bamboo::ProjectsConfigReader.new(config_file_path)
       @project_build_log_parser = Bamboo::ProjectBuildLogParser.new
-      @request_executor = Concurrent::FixedThreadPool.new(10)
+      @request_executor = Concurrent::FixedThreadPool.new(20)
     end
 
     def project_builds
@@ -38,34 +38,42 @@ module Bamboo
     end
 
     def project_build_log_from(project_build_log_cxn)
-      latestResult = project_build_log_cxn[:client].latest_result_for(project_build_log_cxn[:build_key])
-      @project_build_log_parser.parse(latestResult)
+      plan = project_build_log_cxn[:client].plan_for(project_build_log_cxn[:build_key])
+      latest_result = project_build_log_cxn[:client].latest_result_for(project_build_log_cxn[:build_key])
+      @project_build_log_parser.parse(plan, latest_result)
     end
 
     include RetryThis
   end
 end
 
-# Apply some monekey-patches to the Bamboo Client Rest API to allow us to efficiently invoke it
+# Apply some monkey-patches to the Bamboo Client Rest API to allow us to efficiently invoke it
 module BambooClientRestExtensions
-  module LatestResultFor
-    def latest_result_for(key)
-      result = Bamboo::Client::Rest::Result.new get("result/#{URI.escape key}/latest").data, @http
+  module ClientExtension
+    def latest_result_for(planKey)
+      result = Bamboo::Client::Rest::Result.new get("result/#{URI.escape planKey}/latest").data, @http
       result.details_from_data
       result
     end
   end
 
-  module ResultPlanName
-    def details_from_data
-      @details = @data
+  module PlanExtension
+    def active?
+      @data['isActive']
     end
 
-    def plan_name
-      @data.fetch('planName')
+    def short_name
+      @data.fetch('shortName')
+    end
+  end
+
+  module ResultExtension
+    def details_from_data
+      @details = @data
     end
   end
 end
 
-Bamboo::Client::Rest::Result.include BambooClientRestExtensions::ResultPlanName
-Bamboo::Client::Rest.include BambooClientRestExtensions::LatestResultFor
+Bamboo::Client::Rest::Result.include BambooClientRestExtensions::ResultExtension
+Bamboo::Client::Rest::Plan.include BambooClientRestExtensions::PlanExtension
+Bamboo::Client::Rest.include BambooClientRestExtensions::ClientExtension
