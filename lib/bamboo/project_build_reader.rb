@@ -4,8 +4,6 @@ require 'concurrent'
 require 'lib/bamboo/projects_config_reader'
 require 'lib/bamboo/project_build_log_parser'
 
-RestClient.log = STDOUT
-
 module Bamboo
   class ProjectBuildReader
     def initialize(config_file_path)
