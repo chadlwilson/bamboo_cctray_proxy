@@ -16,7 +16,7 @@ module Bamboo
 
     def project_builds
       futures = project_build_log_cxns.collect do |project_build_log_cxn|
-        Concurrent::Promises.future(project_build_log_cxn) do |cxn|
+        Concurrent::Promises.future_on(@request_executor, project_build_log_cxn) do |cxn|
           latest_project_build_from(cxn)
         end
       end.compact
