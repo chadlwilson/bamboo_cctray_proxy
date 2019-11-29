@@ -36,10 +36,12 @@ module Bamboo
     end
 
     def project_build_log_from(project_build_log_cxn)
+      puts Time.new.to_s + ' Retrieving ' + project_build_log_cxn[:build_key]
       plan = project_build_log_cxn[:client].plan_for(project_build_log_cxn[:build_key])
       latest_result = project_build_log_cxn[:client].latest_result_for(project_build_log_cxn[:build_key])
-      @project_build_log_parser.parse(plan, latest_result)
-      puts Time.new.to_s + 'Retrieved results for ' + project_build_log_cxn[:build_key]
+      project_build = @project_build_log_parser.parse(plan, latest_result)
+      puts Time.new.to_s + ' Retrieved results for ' + project_build_log_cxn[:build_key]
+      project_build
     end
 
     include RetryThis
