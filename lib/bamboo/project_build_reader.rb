@@ -1,24 +1,30 @@
 require 'net/http'
 require 'retry_this'
+require 'ramaze'
 require 'concurrent'
 require 'lib/bamboo/projects_config_reader'
 require 'lib/bamboo/project_build_log_parser'
 
 module Bamboo
   class ProjectBuildReader
+    CONCURRENT_BAMBOO_REQUESTS = 20
+
     def initialize(config_file_path)
       @projects_config_reader = Bamboo::ProjectsConfigReader.new(config_file_path)
       @project_build_log_parser = Bamboo::ProjectBuildLogParser.new
-      @request_executor = Concurrent::FixedThreadPool.new(20)
+      @request_executor = Concurrent::FixedThreadPool.new(CONCURRENT_BAMBOO_REQUESTS)
     end
 
     def project_builds
+      start = Time.now
       futures = project_build_log_cxns.collect do |project_build_log_cxn|
         Concurrent::Promises.future_on(@request_executor, project_build_log_cxn) do |cxn|
           latest_project_build_from(cxn)
         end
       end
-      Concurrent::Promises.zip_futures_on(@request_executor, *futures).value!.compact
+      result = Concurrent::Promises.zip_futures_on(@request_executor, *futures).value!.compact
+      Ramaze::Log.debug "Took #{Time.now - start} secs to retrieve #{result.length} build status"
+      result
     end
 
     private
