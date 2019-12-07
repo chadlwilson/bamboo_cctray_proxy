@@ -17,8 +17,8 @@ module Bamboo
         Concurrent::Promises.future_on(@request_executor, project_build_log_cxn) do |cxn|
           latest_project_build_from(cxn)
         end
-      end.compact
-      Concurrent::Promises.zip_futures_on(@request_executor, *futures).value!
+      end
+      Concurrent::Promises.zip_futures_on(@request_executor, *futures).value!.compact
     end
 
     private
