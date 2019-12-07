@@ -1,5 +1,6 @@
 require 'singleton'
 require 'ramaze'
+require 'concurrent'
 require 'app/bamboo_to_cctray'
 
 class Dashboard < Ramaze::Controller
@@ -22,6 +23,7 @@ class Dashboard < Ramaze::Controller
     
     def initialize
       @bamboo_to_cctray = BambooToCcTray.new
+      @cache_update_lock = Concurrent::ReadWriteLock.new
     end
     
     def to_cctray
@@ -33,8 +35,11 @@ class Dashboard < Ramaze::Controller
     private
     def cache_for(secs)
       return cached_result if cache_valid?(secs)
-      result = yield
-      update_cache(result)
+      @cache_update_lock.with_write_lock do
+        return cached_result if cache_valid?(secs)
+        result = yield
+        update_cache(result)
+      end
     end
 
     def cached_result
