@@ -1,6 +1,4 @@
-require 'net/http'
 require 'retry_this'
-require 'ramaze'
 require 'concurrent'
 require 'lib/bamboo/projects_config_reader'
 require 'lib/bamboo/project_build_log_parser'
@@ -8,7 +6,8 @@ require 'lib/bamboo/project_build_log_parser'
 module Bamboo
   class ProjectBuildReader
     CONCURRENT_BAMBOO_REQUESTS = 20
-    RETRY_ATTEMPTS = 3
+    RETRY_ATTEMPTS = 2
+    RETRY_SLEEP_SECS = 0.1
 
     def initialize(config_file_path)
       @projects_config_reader = Bamboo::ProjectsConfigReader.new(config_file_path)
@@ -34,12 +33,13 @@ module Bamboo
     end
 
     def latest_project_build_from(project_build_log_cxn)
-      retry_this(:times => RETRY_ATTEMPTS, :error_types => Timeout::Error) do
+      retry_this(:times => RETRY_ATTEMPTS, :sleep => RETRY_SLEEP_SECS, :error_types => RestClient::Exception) do
         project_build_log_from(project_build_log_cxn)
       end
-    rescue StandardError, Timeout::Error => e
+    rescue StandardError => err
       Ramaze::Log.error "#{project_build_log_cxn[:build_key]} failed and will be ignored..."
-      Ramaze::Log.error e
+      Ramaze::Log.error err
+      nil
     end
 
     def project_build_log_from(project_build_log_cxn)
