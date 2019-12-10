@@ -33,7 +33,9 @@ module Bamboo
     end
 
     def latest_project_build_from(project_build_log_cxn)
-      retry_this(:times => RETRY_ATTEMPTS, :sleep => RETRY_SLEEP_SECS, :error_types => RestClient::Exception) do
+      retry_this(:times => RETRY_ATTEMPTS,
+                 :sleep => RETRY_SLEEP_SECS,
+                 :error_types => [RestClient::Exception, SocketError, TimeoutError]) do
         project_build_log_from(project_build_log_cxn)
       end
     rescue StandardError => err
