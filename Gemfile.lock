@@ -28,7 +28,7 @@ GEM
     netrc (0.11.0)
     nokogiri (1.10.5)
       mini_portile2 (~> 2.4.0)
-    rack (1.6.11)
+    rack (1.6.12)
     rake (13.0.1)
     ramaze (2012.12.08)
       innate (>= 2012.12)
