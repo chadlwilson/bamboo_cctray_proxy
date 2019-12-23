@@ -43,10 +43,14 @@ module Bamboo
     end
 
     def client_for(server_config)
-      client = Bamboo::Client.for(:rest, server_config[:connection][:url])
+      uri = URI.parse(server_config[:connection][:url])
       if server_config[:connection][:basic_auth]
-        client.login(server_config[:connection][:basic_auth]['username'],
-                     server_config[:connection][:basic_auth]['password'])
+        uri.user = server_config[:connection][:basic_auth]['username']
+        uri.password = server_config[:connection][:basic_auth]['password']
+      end
+      client = Bamboo::Client.for(:rest, uri.to_s)
+      if server_config[:connection][:basic_auth]
+        client.login('', '')
       end
       client
     end
