@@ -45,8 +45,8 @@ module Bamboo
     def client_for(server_config)
       uri = URI.parse(server_config[:connection][:url])
       if server_config[:connection][:basic_auth]
-        uri.user = server_config[:connection][:basic_auth]['username']
-        uri.password = server_config[:connection][:basic_auth]['password']
+        uri.user = CGI.escape(server_config[:connection][:basic_auth]['username'])
+        uri.password = CGI.escape(server_config[:connection][:basic_auth]['password'])
       end
       client = Bamboo::Client.for(:rest, uri.to_s)
       if server_config[:connection][:basic_auth]
