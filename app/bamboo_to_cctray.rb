@@ -18,6 +18,6 @@ class BambooToCcTray
   end
   
   def config_file_path
-    File.join(File.dirname(__FILE__), '../tmp/bamboo.yml')
+    File.join(File.dirname(__FILE__), '../config/bamboo.yml')
   end
 end
