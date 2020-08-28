@@ -1,7 +1,7 @@
 require 'retry_this'
 require 'concurrent'
-require 'lib/bamboo/projects_config_reader'
-require 'lib/bamboo/project_build_log_parser'
+require './lib/bamboo/projects_config_reader'
+require './lib/bamboo/project_build_log_parser'
 
 module Bamboo
   class ProjectBuildReader
@@ -23,7 +23,7 @@ module Bamboo
         end
       end
       result = Concurrent::Promises.zip_futures_on(@request_executor, *futures).value!.compact
-      Ramaze::Log.debug "Took #{Time.now - start} secs to retrieve #{result.length} build status"
+      puts "Took #{Time.now - start} secs to retrieve #{result.length} build status"
       result
     end
 
@@ -39,8 +39,8 @@ module Bamboo
         project_build_log_from(project_build_log_cxn)
       end
     rescue StandardError => err
-      Ramaze::Log.error "#{project_build_log_cxn[:build_key]} failed and will be ignored..."
-      Ramaze::Log.error err
+      puts "#{project_build_log_cxn[:build_key]} failed and will be ignored..."
+      puts err
       nil
     end
 

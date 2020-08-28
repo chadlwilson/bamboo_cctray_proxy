@@ -62,8 +62,8 @@ docker run -p 7000:7000 -v $(pwd)/config:/app/config chadwilson/bamboo_cctray_pr
 
 ```bash
 git clone git@github.com:chadlwilson/bamboo_cctray_proxy.git && cd bamboo_cctray_proxy
-bundle install --without=test
-cd ramaze && ruby -rrubygems start.rb
+bundle install --without=development
+ruby dashboard.rb
 ```
 
 ## Configuration

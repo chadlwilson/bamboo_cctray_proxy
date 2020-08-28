@@ -6,7 +6,7 @@ RUN apk add --no-cache build-base && \
 
 WORKDIR /app
 COPY Gemfile Gemfile.lock ./
-RUN bundle install --without test -j4 --retry 3 && \
+RUN bundle install --without development -j4 --retry 3 && \
     rm -rf /usr/local/bundle/bundler/gems/*/.git /usr/local/bundle/cache/
 
 FROM ruby:2.6-alpine
@@ -14,5 +14,5 @@ FROM ruby:2.6-alpine
 COPY --from=builder /usr/local/bundle/ /usr/local/bundle/
 COPY . /app
 
-WORKDIR /app/ramaze
-ENTRYPOINT ["ruby", "-rrubygems", "start.rb"]
+WORKDIR /app
+ENTRYPOINT ["ruby", "dashboard.rb"]

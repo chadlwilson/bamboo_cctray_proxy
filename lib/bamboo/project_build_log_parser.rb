@@ -1,5 +1,5 @@
-require 'model/project_build_log'
-require 'model/project_build'
+require './model/project_build_log'
+require './model/project_build'
 
 module Bamboo
   class ProjectBuildLogParser

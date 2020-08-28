@@ -1,5 +1,5 @@
-require 'lib/bamboo/project_build_reader'
-require 'lib/cctray/project_build_report_generator'
+require './lib/bamboo/project_build_reader'
+require './lib/cctray/project_build_report_generator'
 
 class BambooToCcTray  
   def initialize
@@ -18,6 +18,6 @@ class BambooToCcTray
   end
   
   def config_file_path
-    File.join(File.dirname(__FILE__), '../config/bamboo.yml')
+    File.join(File.dirname(__FILE__), '../tmp/bamboo.yml')
   end
 end
