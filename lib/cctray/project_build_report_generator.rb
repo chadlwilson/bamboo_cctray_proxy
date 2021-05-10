@@ -26,7 +26,7 @@ module CcTray
     end
     
     def format_web_url(web_url)
-      web_url.sub! 'rest/api/latest/result', 'browse'
+      web_url.sub 'rest/api/latest/result', 'browse'
     end
     
     def format_activity(activity)
