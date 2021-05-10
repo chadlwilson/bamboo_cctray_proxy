@@ -10,7 +10,7 @@ module CcTray
               :lastBuildLabel => project_build.last_build_label,
               :lastBuildTime => format_last_build_time(project_build.last_build_time),
               :name => project_build.name,
-              :webUrl => project_build.web_url,
+              :webUrl => format_web_url(project_build.web_url),
               :activity => format_activity(project_build.activity),
               :lastBuildStatus => format_last_build_status(project_build.last_build_status)
             )
@@ -23,6 +23,10 @@ module CcTray
     private
     def format_last_build_time(last_build_time)
       last_build_time.utc.strftime('%Y-%m-%dT%H:%M:%SZ')
+    end
+    
+    def format_web_url(web_url)
+      web_url.sub! 'rest/api/latest/result', 'browse'
     end
     
     def format_activity(activity)
