@@ -6,7 +6,7 @@ GEM
       json
       nokogiri
       rest-client
-    concurrent-ruby (1.1.8)
+    concurrent-ruby (1.1.9)
     diff-lcs (1.4.4)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
