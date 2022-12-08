@@ -1,7 +1,6 @@
 FROM ruby:2.7-alpine as builder
 
 RUN apk add --no-cache build-base && \
-    gem install bundler && \
     bundle config --global frozen 1
 
 WORKDIR /app
