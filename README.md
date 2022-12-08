@@ -49,13 +49,13 @@ docker-compose up
 
 1. Setup your configuration in `config/bamboo.xml`
 1. Run it by one of the mechanisms below
-1. Navigate to http://localhost:7000/dashboard/cctray.xml to view the feed; point your tools at this
+1. Navigate to http://localhost:7001/dashboard/cctray.xml to view the feed; point your tools at this
 
 ### Docker
 
 ```bash
 mkdir -p config && touch config/bamboo.yml # Put your config here
-docker run -p 7000:7000 -v $(pwd)/config:/app/config chadwilson/bamboo_cctray_proxy:latest
+docker run -p 7001:7001 -v $(pwd)/config:/app/config chadwilson/bamboo_cctray_proxy:latest
 ```
 
 ### Running from source

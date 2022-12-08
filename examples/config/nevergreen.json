@@ -1,7 +1,7 @@
 [
   {
     "trayId": "bamboo-spring",
-    "url": "http://bamboo_cctray_proxy:7000/dashboard/cctray.xml",
+    "url": "http://bamboo_cctray_proxy:7001/dashboard/cctray.xml",
     "includeNew": true,
     "prognosis": [
       "healthy",

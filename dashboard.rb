@@ -6,7 +6,7 @@ require './app/bamboo_to_cctray'
 CACHE_EXPIRY_SECONDS = 30
 
 set :bind, '0.0.0.0'
-set :port, ENV['PORT'] || 7000
+set :port, ENV['PORT'] || 7001
 
 before do
   cache_control :public, :must_revalidate, :max_age => CACHE_EXPIRY_SECONDS

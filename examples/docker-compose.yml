@@ -11,24 +11,24 @@ services:
   bamboo_cctray_proxy:
     image: chadwilson/bamboo_cctray_proxy:latest
     ports:
-      - 7000
+      - 7001:7001
     volumes:
       - ./config:/app/config
 
   curl_cctray:
-    image: byrnedo/alpine-curl:latest
+    image: ghcr.io/containeroo/alpine-toolbox:latest
     command: >
-      --retry 10 --retry-delay 1 --retry-connrefused
-      http://bamboo_cctray_proxy:7000/dashboard/cctray.xml
+      curl --retry 10 --retry-delay 1 --retry-connrefused
+      http://bamboo_cctray_proxy:7001/dashboard/cctray.xml
     depends_on:
       - bamboo_cctray_proxy
 
   curl_nevergreen:
-    image: byrnedo/alpine-curl:latest
+    image: ghcr.io/containeroo/alpine-toolbox:latest
     volumes:
       - ./config:/config
     command: >
-      --retry 10 --retry-delay 10 --retry-connrefused
+      curl --retry 10 --retry-delay 10 --retry-connrefused
       -X POST http://nevergreen:5000/api/projects
       -H 'Content-Type: application/json' -H 'cache-control: no-cache'
       --data-binary '@/config/nevergreen.json'
