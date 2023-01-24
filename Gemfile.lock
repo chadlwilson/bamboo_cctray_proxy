@@ -6,7 +6,7 @@ GEM
       json
       nokogiri
       rest-client
-    concurrent-ruby (1.1.10)
+    concurrent-ruby (1.2.0)
     diff-lcs (1.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -65,7 +65,7 @@ PLATFORMS
 DEPENDENCIES
   attribute-driven
   bamboo-client
-  concurrent-ruby (~> 1.1)
+  concurrent-ruby (~> 1.2)
   rake
   retry-this
   rspec
