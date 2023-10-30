@@ -28,7 +28,7 @@ GEM
     rack (2.2.8)
     rack-protection (3.1.0)
       rack (~> 2.2, >= 2.2.4)
-    rake (13.0.6)
+    rake (13.1.0)
     rest-client (2.1.0)
       http-accept (>= 1.7.0, < 2.0)
       http-cookie (>= 1.0.2, < 2.0)
